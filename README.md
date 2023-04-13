@@ -11,7 +11,7 @@ Pré-requisitos
 
 # Relacionamento do banco de Dados
 <div alingn="center">
- <a> <img src="Design/Image/Relacionamentos_BD.png" target="_blank"></a>
+ <a> <img src="ProjetoGerenciamentoRestaurante.RazorPages/Design/Image/Relacionamentos_BD.png" target="_blank"></a>
 </div>
 
 # Como rodar o projeto
