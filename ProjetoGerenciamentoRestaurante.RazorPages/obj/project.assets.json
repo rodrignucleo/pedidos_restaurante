@@ -1270,11 +1270,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\ProjetoGamificao\\pedidos_restaurante\\gamificacao_pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
+      "projectUniqueName": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\ProjetoGamificao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
       "projectName": "ProjetoGerenciamentoRestaurante.RazorPages",
-      "projectPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\ProjetoGamificao\\pedidos_restaurante\\gamificacao_pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
+      "projectPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\ProjetoGamificao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
       "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\ProjetoGamificao\\pedidos_restaurante\\gamificacao_pedidos_restaurante\\obj\\",
+      "outputPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\ProjetoGamificao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
