@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pjGGFSXUJ2tmrLG60WcsqxwfDr1DGu/2mJ0f5ijZPgyOhn9giCe2Pd00m38wt3rt26frcfdH7R133yIQaVK6ZA==",
+  "dgSpecHash": "R1oYrzwCRakVKfv4wJGL8Wbr9U+VRdG3B6mRVU/DrWngP2ityzHaHQzrusYuEGgKc8ndQCtsxn8sSpsDl3Pe/g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\ProjetoGamificao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
+  "projectFilePath": "C:\\Users\\rodri\\Documents\\Programacao\\APIs\\GamificacaoAtividade\\TDS_Gamificacao\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rodri\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\rodri\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.4\\microsoft.data.sqlite.core.7.0.4.nupkg.sha512",
