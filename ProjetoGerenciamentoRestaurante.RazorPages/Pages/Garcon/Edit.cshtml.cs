@@ -1,58 +1,95 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Data;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon
 {
     public class Edit : PageModel
     {
-        private readonly AppDbContext _context;
+        // private readonly AppDbContext _context;
         [BindProperty]
-
-            public GarconModel GarconModel { get; set; } = new();
-            public Edit(AppDbContext context){
-                _context = context;
+        public GarconModel GarconModel { get; set; } = new();
+        // public Edit(AppDbContext context){
+            // _context = context;
+        // }
+        public Edit(){
         }
 
         public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Garcon == null){
+            // if(id == null || _context.Garcon == null){
+            //     return NotFound();
+            // }
+
+            // var garconModel = await _context.Garcon.FirstOrDefaultAsync(e => e.GarconId == id);
+            // if(garconModel == null){
+            //     return NotFound();
+            // }
+            // GarconModel = garconModel;
+            // return Page();
+            if(id == null){
                 return NotFound();
             }
 
-            var garconModel = await _context.Garcon.FirstOrDefaultAsync(e => e.GarconId == id);
-            if(garconModel == null){
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Garcom/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+
+            if(!response.IsSuccessStatusCode){
                 return NotFound();
             }
-            GarconModel = garconModel;
+
+            var content = await response.Content.ReadAsStringAsync();
+            GarconModel = JsonConvert.DeserializeObject<GarconModel>(content);
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id){
+            // if(!ModelState.IsValid){
+            //     return Page();
+            // }
+
+            // var garconToUpdate = await _context.Garcon!.FindAsync(id);
+
+            // if(garconToUpdate == null){
+            //     return NotFound();
+            // }
+
+            // garconToUpdate.Nome = GarconModel.Nome;
+            // garconToUpdate.Sobrenome = GarconModel.Sobrenome;
+            // garconToUpdate.Cpf = GarconModel.Cpf;
+            // garconToUpdate.Telefone = GarconModel.Telefone;
+
+            // try{
+            //     await _context.SaveChangesAsync();
+            //     return RedirectToPage("/Garcon/Index");
+            // } catch(DbUpdateException){
+            //     return Page();
+            // }
+
             if(!ModelState.IsValid){
                 return Page();
             }
 
-            var garconToUpdate = await _context.Garcon!.FindAsync(id);
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Garcom/{id}";
+            var garconJson = JsonConvert.SerializeObject(GarconModel);
 
-            if(garconToUpdate == null){
-                return NotFound();
-            }
+            var requestMessage = new HttpRequestMessage(HttpMethod.Post, url);
+            requestMessage.Content = new StringContent(garconJson, Encoding.UTF8, "application/json");
 
-            garconToUpdate.Nome = GarconModel.Nome;
-            garconToUpdate.Sobrenome = GarconModel.Sobrenome;
-            garconToUpdate.Cpf = GarconModel.Cpf;
-            garconToUpdate.Telefone = GarconModel.Telefone;
+            var response = await httpClient.SendAsync(requestMessage);
 
-            try{
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/Garcon/Index");
-            } catch(DbUpdateException){
+            if(!response.IsSuccessStatusCode){
                 return Page();
             }
-            
-            
+
+            return RedirectToPage("/Garcon/Index");
         }
     }
 }

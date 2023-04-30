@@ -6,65 +6,63 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GarcomController : ControllerBase
+    public class CategoriaController : ControllerBase
     {
         [HttpGet]
-        [Route("/garcom")]
+        [Route("/categoria")]
         public IActionResult Get(
             [FromServices] AppDbContext context) => 
-                Ok( context.Garcon!.ToList());
+                Ok( context.Categoria!.ToList());
 
-        [HttpGet("/garcom/{id:int}")]
+        [HttpGet("/categoria/{id:int}")]
         public IActionResult GetById([FromRoute] int id,
             [FromServices] AppDbContext context)
         {
-            var garconModel = context.Garcon!.FirstOrDefault(x => x.GarconId == id);
-            if (garconModel == null) {
+            var categoriaModel = context.Categoria!.FirstOrDefault(x => x.CategoriaId == id);
+            if (categoriaModel == null) {
                 return NotFound();
             }
 
-            return Ok(garconModel);
+            return Ok(categoriaModel);
         }
 
-        [HttpPost("/garcom")]
-        public IActionResult Post([FromBody] GarconModel garconModel,
+        [HttpPost("/categoria")]
+        public IActionResult Post([FromBody] CategoriaModel categoriaModel,
             [FromServices] AppDbContext context)
         {
-            context.Garcon!.Add(garconModel);
+            context.Categoria!.Add(categoriaModel);
             context.SaveChanges();
-            return Created($"/{garconModel.GarconId}", garconModel);
+            return Created($"/{categoriaModel.CategoriaId}", categoriaModel);
         }
 
-        [HttpPut("/garcom")]
+        [HttpPut("/categoria")]
         public IActionResult Put([FromRoute] int id, 
-            [FromBody] GarconModel garconModel,
+            [FromBody] CategoriaModel categoriaModel,
             [FromServices] AppDbContext context)
         {
-            var model = context.Garcon!.FirstOrDefault(x => x.GarconId == id);
+            var model = context.Categoria!.FirstOrDefault(x => x.CategoriaId == id);
             if (model == null) {
                 return NotFound();
             }
 
-            model.Nome = garconModel.Nome;
-            model.Sobrenome = garconModel.Sobrenome;
-            model.Cpf = garconModel.Cpf;
-            model.Telefone = garconModel.Telefone;
+            model.Nome = categoriaModel.Nome;
+            model.Descricao = categoriaModel.Descricao;
 
-            context.Garcon!.Update(model);
+            context.Categoria!.Update(model);
             context.SaveChanges();
             return Ok(model);
         }
 
-        [HttpDelete("/garcom")]
+        [HttpDelete("/categoria")]
         public IActionResult Delete([FromRoute] int id, 
             [FromServices] AppDbContext context)
         {
-            var model = context.Garcon!.FirstOrDefault(x => x.GarconId == id);
+            var model = context.Categoria!.FirstOrDefault(x => x.CategoriaId == id);
             if (model == null) {
                 return NotFound();
             }
 
-            context.Garcon!.Remove(model);
+            context.Categoria!.Remove(model);
             context.SaveChanges();
             return Ok(model);
         }

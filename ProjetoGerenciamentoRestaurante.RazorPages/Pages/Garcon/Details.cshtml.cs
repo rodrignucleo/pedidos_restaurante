@@ -1,30 +1,52 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Data;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon
 {
     public class Details : PageModel
     {
-        private readonly AppDbContext _context;
         public GarconModel GarconModel { get; set; } = new();
 
-        public Details(AppDbContext context){
-            _context = context;
+        // public Details(AppDbContext context){
+        //     _context = context;
+        // }
+
+        public Details(){
+            
         }
 
         public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Garcon == null){
+            // if(id == null || _context.Garcon == null){
+            //     return NotFound();
+            // }
+
+            // var garconModel = await _context.Garcon.FirstOrDefaultAsync(e => e.GarconId == id);
+            // if(garconModel == null){
+            //     return NotFound();
+            // }
+            // GarconModel = garconModel;
+            // return Page();
+
+            if(id == null){
                 return NotFound();
             }
 
-            var garconModel = await _context.Garcon.FirstOrDefaultAsync(e => e.GarconId == id);
-            if(garconModel == null){
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Garcom/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+
+            if(!response.IsSuccessStatusCode){
                 return NotFound();
             }
-            GarconModel = garconModel;
+
+            var content = await response.Content.ReadAsStringAsync();
+            GarconModel = JsonConvert.DeserializeObject<GarconModel>(content);
+            
             return Page();
         }
     }
