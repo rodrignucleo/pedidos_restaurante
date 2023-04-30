@@ -1,4 +1,4 @@
-namespace ProjetoGerenciamentoRestaurante.RazorPages.Models
+namespace ProjetoGerenciamentoRestaurante.API.Models
 {
     public class PedidoView
     {

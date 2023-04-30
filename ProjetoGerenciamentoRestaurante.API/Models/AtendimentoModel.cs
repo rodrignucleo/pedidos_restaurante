@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProjetoGerenciamentoRestaurante.RazorPages.Models
+namespace ProjetoGerenciamentoRestaurante.API.Models
 {
     public class AtendimentoModel
     {
