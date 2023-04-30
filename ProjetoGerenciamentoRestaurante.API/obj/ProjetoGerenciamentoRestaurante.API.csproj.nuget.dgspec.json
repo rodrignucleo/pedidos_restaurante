@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj": {}
+    "c:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj": {
+    "c:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
-        "projectName": "ProjetoGerenciamentoRestaurante.RazorPages",
-        "projectPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\ProjetoGerenciamentoRestaurante.RazorPages.csproj",
+        "projectUniqueName": "c:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
+        "projectName": "ProjetoGerenciamentoRestaurante.API",
+        "projectPath": "c:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
         "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.RazorPages\\obj\\",
+        "outputPath": "c:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,15 +40,23 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.5, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
             }
           },
           "imports": [
