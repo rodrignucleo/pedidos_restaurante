@@ -40,7 +40,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             [FromBody] GarconModel garconModel,
             [FromServices] AppDbContext context)
         {
-            var model =context.Garcon!.FirstOrDefault(x => x.GarconId == id);
+            var model = context.Garcon!.FirstOrDefault(x => x.GarconId == id);
             if (model == null) {
                 return NotFound();
             }

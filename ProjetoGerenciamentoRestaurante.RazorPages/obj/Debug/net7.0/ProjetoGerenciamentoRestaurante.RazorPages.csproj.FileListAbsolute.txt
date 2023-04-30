@@ -393,3 +393,4 @@ C:\Users\rodri\OneDrive\Documentos\Programacao\TDS\Gamificacao\pedidos_restauran
 C:\Users\rodri\OneDrive\Documentos\Programacao\TDS\Gamificacao\pedidos_restaurante\ProjetoGerenciamentoRestaurante.RazorPages\obj\Debug\net7.0\ProjetoGerenciamentoRestaurante.RazorPages.pdb
 C:\Users\rodri\OneDrive\Documentos\Programacao\TDS\Gamificacao\pedidos_restaurante\ProjetoGerenciamentoRestaurante.RazorPages\obj\Debug\net7.0\ProjetoGerenciamentoRestaurante.RazorPages.genruntimeconfig.cache
 C:\Users\rodri\OneDrive\Documentos\Programacao\TDS\Gamificacao\pedidos_restaurante\ProjetoGerenciamentoRestaurante.RazorPages\obj\Debug\net7.0\ref\ProjetoGerenciamentoRestaurante.RazorPages.dll
+C:\Users\rodri\OneDrive\Documentos\Programacao\TDS\Gamificacao\pedidos_restaurante\ProjetoGerenciamentoRestaurante.RazorPages\bin\Debug\net7.0\Newtonsoft.Json.dll
