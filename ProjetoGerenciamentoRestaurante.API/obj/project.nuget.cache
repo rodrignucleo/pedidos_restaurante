@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NSWV4RClOvy2WbaCiV2+fOSguTWG6ifOgpwWukIrPhYEkhmyY8TUb9Gf4ANV3+jNh9Z10IWXlKVyG3tev5/pmw==",
+  "dgSpecHash": "xeaR/lpL17i5fkL0gJIZS3HUhf2exF8MKai2Xg8qYCqgeCVxv18rhYuaHDKJcJd118+nvtGx2WUG8IOMtZoEag==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
+  "projectFilePath": "c:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rodri\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\rodri\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",
