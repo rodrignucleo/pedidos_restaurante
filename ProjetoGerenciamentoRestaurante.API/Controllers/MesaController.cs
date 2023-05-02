@@ -63,41 +63,6 @@ public IActionResult Put([FromRoute] int id, [FromBody] MesaModel mesaModel, [Fr
     }
 }
 
-
-        // [HttpPut("/Mesa/Edit/{id:int}")]
-        // public IActionResult Put([FromRoute] int id, 
-        //     [FromBody] MesaModel mesaModel,
-        //     [FromServices] AppDbContext context)
-        // {
-        //     var model = context.Mesa!.FirstOrDefault(x => x.MesaId == id);
-        //     if (model == null) {
-        //         return NotFound();
-        //     }
-
-        //     model.Numero = mesaModel.Numero;
-        //     model.Status = mesaModel.Status;
-        //     if(mesaModel.Status){
-        //         model.HoraAbertura = mesaModel.HoraAbertura;
-        //     }
-        //     else{
-        //         model.HoraAbertura = null;
-        //     }
-
-        //     if (mesaModel.Status && !mesaModel.HoraAbertura.HasValue) {
-        //         return BadRequest(new { message = "Insira uma data e hora para a abertura da mesa." });
-        //     }
-        //     else{
-        //         context.Mesa!.Update(model);
-        //         context.SaveChanges(); 
-        //         return Ok(model);
-        //     }
-
-            // if(mesaModel.Status && mesaModel.HoraAbertura is null){
-            //     ModelState.AddModelError(string.Empty, "Insira uma data e hora para a abertura da mesa.");
-            //     return Ok(model);
-            // }
-        // }
-
         [HttpDelete("/Mesa/Delete/{id:int}")]
         public IActionResult Delete([FromRoute] int id, 
             [FromServices] AppDbContext context)
