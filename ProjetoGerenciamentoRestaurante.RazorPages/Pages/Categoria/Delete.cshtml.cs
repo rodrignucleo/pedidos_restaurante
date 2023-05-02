@@ -1,50 +1,59 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
+using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Data;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Categoria
 {
     public class Delete : PageModel
     {
-        private readonly AppDbContext _context;
         [BindProperty]
-
-            public CategoriaModel CategoriaModel { get; set; } = new();
-            public Delete(AppDbContext context){
-                _context = context;
+        public CategoriaModel CategoriaModel { get; set; } = new();
+        public Delete(){
         }
 
         public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Categoria == null){
+            if(id == null){
                 return NotFound();
             }
 
-            var categoriaModel = await _context.Categoria.FirstOrDefaultAsync(e => e.CategoriaId == id);
-            if(categoriaModel == null){
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Categoria/Details/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+
+            if(!response.IsSuccessStatusCode){
                 return NotFound();
             }
-            CategoriaModel = categoriaModel;
+
+            var content = await response.Content.ReadAsStringAsync();
+            CategoriaModel = JsonConvert.DeserializeObject<CategoriaModel>(content)!;
+            
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id){
-            var categoriaToDelete = await _context.Categoria!.FindAsync(id);
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Categoria/Delete/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Delete, url);
+            var response = await httpClient.SendAsync(requestMessage);
 
-            if(categoriaToDelete == null){
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToPage("/Categoria/Index");
+            }
+            else if (response.StatusCode == HttpStatusCode.NotFound)
+            {
                 return NotFound();
             }
-
-            try{
-                _context.Categoria.Remove(categoriaToDelete);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/Categoria/Index");
-            } catch(DbUpdateException){
+            else
+            {
                 return Page();
             }
-            
-            
         }
     }
 }

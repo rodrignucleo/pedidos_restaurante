@@ -9,12 +9,12 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
     public class CategoriaController : ControllerBase
     {
         [HttpGet]
-        [Route("/categoria")]
+        [Route("/Categoria")]
         public IActionResult Get(
             [FromServices] AppDbContext context) => 
                 Ok( context.Categoria!.ToList());
 
-        [HttpGet("/categoria/{id:int}")]
+        [HttpGet("/Categoria/Details/{id:int}")]
         public IActionResult GetById([FromRoute] int id,
             [FromServices] AppDbContext context)
         {
@@ -26,7 +26,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             return Ok(categoriaModel);
         }
 
-        [HttpPost("/categoria")]
+        [HttpPost("/Categoria/Create")]
         public IActionResult Post([FromBody] CategoriaModel categoriaModel,
             [FromServices] AppDbContext context)
         {
@@ -35,7 +35,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             return Created($"/{categoriaModel.CategoriaId}", categoriaModel);
         }
 
-        [HttpPut("/categoria")]
+        [HttpPut("/Categoria/Edit/{id:int}")]
         public IActionResult Put([FromRoute] int id, 
             [FromBody] CategoriaModel categoriaModel,
             [FromServices] AppDbContext context)
@@ -53,7 +53,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             return Ok(model);
         }
 
-        [HttpDelete("/categoria")]
+        [HttpDelete("/Categoria/Delete/{id:int}")]
         public IActionResult Delete([FromRoute] int id, 
             [FromServices] AppDbContext context)
         {

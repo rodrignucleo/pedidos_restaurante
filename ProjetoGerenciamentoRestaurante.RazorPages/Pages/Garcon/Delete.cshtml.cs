@@ -1,10 +1,7 @@
 using System.Net;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
 using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon
@@ -12,6 +9,8 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon
     public class Delete : PageModel {   
         [BindProperty]
         public GarconModel GarconModel { get; set; } = new();
+        public Delete(){
+        }
         
         public async Task<IActionResult> OnGetAsync(int? id){
             if(id == null){

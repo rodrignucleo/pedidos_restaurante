@@ -1,29 +1,36 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Data;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
+
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Categoria
 {
     public class Details : PageModel
     {
-        private readonly AppDbContext _context;
         public CategoriaModel CategoriaModel { get; set; } = new();
 
-        public Details(AppDbContext context){
-            _context = context;
+        public Details(){
         }
 
         public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Categoria == null){
+            if(id == null){
                 return NotFound();
             }
 
-            var categoriaModel = await _context.Categoria.FirstOrDefaultAsync(e => e.CategoriaId == id);
-            if(categoriaModel == null){
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Categoria/Details/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+
+            if(!response.IsSuccessStatusCode){
                 return NotFound();
             }
-            CategoriaModel = categoriaModel;
+
+            var content = await response.Content.ReadAsStringAsync();
+            CategoriaModel = JsonConvert.DeserializeObject<CategoriaModel>(content)!;
+            
             return Page();
         }
     }
