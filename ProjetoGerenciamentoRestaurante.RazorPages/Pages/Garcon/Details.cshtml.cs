@@ -45,7 +45,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon
             }
 
             var content = await response.Content.ReadAsStringAsync();
-            GarconModel = JsonConvert.DeserializeObject<GarconModel>(content);
+            GarconModel = JsonConvert.DeserializeObject<GarconModel>(content)!;
             
             return Page();
         }
