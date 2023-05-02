@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProjetoGerenciamentoRestaurante.RazorPages.Data;
 using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
@@ -8,15 +9,19 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Mesa
 {
     public class Index : PageModel
     {
-        private readonly AppDbContext _context;
-
         public List<MesaModel> MesaList { get; set; } = new();
-        public Index(AppDbContext context){
-            _context = context;
+        public Index(){
         }
 
         public async Task<IActionResult> OnGetAsync(){
-            MesaList = await _context.Mesa!.ToListAsync();
+            var httpClient = new HttpClient();
+            var url = "http://localhost:5171/Mesa";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+            var content = await response.Content.ReadAsStringAsync();
+
+            MesaList = JsonConvert.DeserializeObject<List<MesaModel>>(content)!;
+            
             return Page();
         }
     }

@@ -1,13 +1,22 @@
 @page "{id:int}"
 @model ProjetoGerenciamentoRestaurante.RazorPages.Pages.Mesa.Edit
-<h1>Alterar Dados da Mesa</h1>
 
+<div align="center">
+@if(TempData["Mensagem"] != null)
+{
+   <div class="alert alert-danger">@TempData["Mensagem"]</div>
+}
+</div>
+<h1>Alterar Dados da Mesa</h1>
 <hr/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-dange"></div>
             <input type="hidden" asp-for="MesaModel.MesaId"/>
+            
             <div class="form-group">
                 <label asp-for="MesaModel.Numero"></label>
                 <input asp-for="MesaModel.Numero" class="form-control"/>

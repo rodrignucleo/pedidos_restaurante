@@ -1,31 +1,37 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Data;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Mesa
 {
     public class Edit : PageModel
     {
-        private readonly AppDbContext _context;
         [BindProperty]
-
-            public MesaModel MesaModel { get; set; } = new();
-            public Edit(AppDbContext context){
-                _context = context;
+        public MesaModel MesaModel { get; set; } = new();
+        public Edit(){
         }
 
         public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Mesa == null){
+            if(id == null){
                 return NotFound();
             }
 
-            var mesaModel = await _context.Mesa.FirstOrDefaultAsync(e => e.MesaId == id);
-            if(mesaModel == null){
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Mesa/Details/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+
+            if(!response.IsSuccessStatusCode){
                 return NotFound();
             }
-            MesaModel = mesaModel;
+
+            var content = await response.Content.ReadAsStringAsync();
+            MesaModel = JsonConvert.DeserializeObject<MesaModel>(content)!;
+            
             return Page();
         }
 
@@ -33,36 +39,26 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Mesa
             if(!ModelState.IsValid){
                 return Page();
             }
-            
-            var mesaToUpdate = await _context.Mesa!.FindAsync(id);
 
-            if(mesaToUpdate == null){
-                return NotFound();
-            }
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Mesa/Edit/{id}";
+            var mesaJson = JsonConvert.SerializeObject(MesaModel);
 
-            mesaToUpdate.Numero = MesaModel.Numero;
-            mesaToUpdate.Status = MesaModel.Status;
-            if(MesaModel.Status){
-                mesaToUpdate.HoraAbertura = MesaModel.HoraAbertura;
-            }
-            else{
-                mesaToUpdate.HoraAbertura = null;
-            }
+            var requestMessage = new HttpRequestMessage(HttpMethod.Put, url);
+            requestMessage.Content = new StringContent(mesaJson, Encoding.UTF8, "application/json");
 
-            try{
-                if(MesaModel.Status && MesaModel.HoraAbertura is null){
-                    ModelState.AddModelError(string.Empty, "Insira uma data e hora para a abertura da mesa.");
-                    return Page();
-                }
-                else{
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/Mesa/Index");
-                }
-            } catch(DbUpdateException){
+            var response = await httpClient.SendAsync(requestMessage);
+
+            if(MesaModel.HoraAbertura == null){
+                TempData["Mensagem"] = "Insira a Hora de Abertura da Mesa!!";
                 return Page();
             }
-            
-            
+
+            if(!response.IsSuccessStatusCode){
+                return Page();
+            }
+
+            return RedirectToPage("/Mesa/Index");
         }
     }
 }
