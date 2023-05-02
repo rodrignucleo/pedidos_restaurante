@@ -9,12 +9,12 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
     public class GarcomController : ControllerBase
     {
         [HttpGet]
-        [Route("/garcom")]
+        [Route("/Garcon")]
         public IActionResult Get(
             [FromServices] AppDbContext context) => 
                 Ok( context.Garcon!.ToList());
 
-        [HttpGet("/garcom/{id:int}")]
+        [HttpGet("/Garcon/Details/{id:int}")]
         public IActionResult GetById([FromRoute] int id,
             [FromServices] AppDbContext context)
         {
@@ -26,7 +26,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             return Ok(garconModel);
         }
 
-        [HttpPost("/garcom")]
+        [HttpPost("/Garcon/Create")]
         public IActionResult Post([FromBody] GarconModel garconModel,
             [FromServices] AppDbContext context)
         {
@@ -35,7 +35,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             return Created($"/{garconModel.GarconId}", garconModel);
         }
 
-        [HttpPut("/garcom")]
+        [HttpPut("/Garcon/Edit/{id:int}")]
         public IActionResult Put([FromRoute] int id, 
             [FromBody] GarconModel garconModel,
             [FromServices] AppDbContext context)
@@ -55,7 +55,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             return Ok(model);
         }
 
-        [HttpDelete("/garcom")]
+        [HttpDelete("/Garcon/Delete/{id:int}")]
         public IActionResult Delete([FromRoute] int id, 
             [FromServices] AppDbContext context)
         {

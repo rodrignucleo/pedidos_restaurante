@@ -35,7 +35,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon
             }
 
             var httpClient = new HttpClient();
-            var url = $"http://localhost:5171/Garcom/{id}";
+            var url = $"http://localhost:5171/Garcon/Details/{id}";
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
             var response = await httpClient.SendAsync(requestMessage);
 
@@ -77,10 +77,10 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon
             }
 
             var httpClient = new HttpClient();
-            var url = $"http://localhost:5171/Garcom/{id}";
+            var url = $"http://localhost:5171/Garcon/Edit/{id}";
             var garconJson = JsonConvert.SerializeObject(GarconModel);
 
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, url);
+            var requestMessage = new HttpRequestMessage(HttpMethod.Put, url);
             requestMessage.Content = new StringContent(garconJson, Encoding.UTF8, "application/json");
 
             var response = await httpClient.SendAsync(requestMessage);
