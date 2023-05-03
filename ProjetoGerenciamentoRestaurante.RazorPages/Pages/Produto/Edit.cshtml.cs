@@ -1,70 +1,75 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
+using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Data;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Produto
 {
     public class Edit : PageModel
-    {
-        private readonly AppDbContext _context;
+    {   
         [BindProperty]
         public ProdutoModel ProdutoModel { get; set; } = new();
-
         public List<CategoriaModel> CategoriaList { get; set; } = new();
 
-        public Edit(AppDbContext context){
-            _context = context;
+        public Edit(){
         }
 
-        public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Produto == null){
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
                 return NotFound();
             }
 
-            var produtoModel = await _context.Produto
-            .Include(p => p.Categoria)
-            .FirstOrDefaultAsync(e => e.ProdutoId == id);
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Produto/Details/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
 
-            if(produtoModel == null){
+            if (!response.IsSuccessStatusCode)
+            {
                 return NotFound();
             }
-            ProdutoModel = produtoModel;
 
-            /*##################*/
-            var categoria = CategoriaList.FirstOrDefault(c => c.CategoriaId == ProdutoModel.CategoriaId);
-            
-            CategoriaList = await _context.Categoria!.ToListAsync();
-            
+            var content = await response.Content.ReadAsStringAsync();
+            ProdutoModel = JsonConvert.DeserializeObject<ProdutoModel>(content)!;
+
+            // fazer uma nova requisição HTTP GET para obter a lista de categorias
+            var httpClientCategoria = new HttpClient();
+            var urlCategoria = "http://localhost:5171/Categoria";
+            var requestMessageCategoria = new HttpRequestMessage(HttpMethod.Get, urlCategoria);
+            var responseCategoria = await httpClientCategoria.SendAsync(requestMessageCategoria);
+            var contentCategoria = await responseCategoria.Content.ReadAsStringAsync();
+
+            CategoriaList = JsonConvert.DeserializeObject<List<CategoriaModel>>(contentCategoria)!;
 
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync(int id){
             if(!ModelState.IsValid){
                 return Page();
             }
 
-            var produtoToUpdate = await _context.Produto!.FindAsync(id);
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Produto/Edit/{id}";
+            var produtoJson = Newtonsoft.Json.JsonConvert.SerializeObject(ProdutoModel);
 
-            if(produtoToUpdate == null){
-                return NotFound();
-            }
+            var requestMessage = new HttpRequestMessage(HttpMethod.Put, url);
+            requestMessage.Content = new StringContent(produtoJson, Encoding.UTF8, "application/json");
 
-            produtoToUpdate.Nome = ProdutoModel.Nome;
-            produtoToUpdate.Descricao = ProdutoModel.Descricao;
-            produtoToUpdate.Preco = ProdutoModel.Preco;
-            produtoToUpdate.CategoriaId = ProdutoModel.CategoriaId;
+            var response = await httpClient.SendAsync(requestMessage);
 
-            try{
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/Produto/Index");
-            } catch(DbUpdateException){
+            if(!response.IsSuccessStatusCode){
                 return Page();
             }
-            
-            
+
+            return RedirectToPage("/Produto/Index");
         }
     }
 }

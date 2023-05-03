@@ -26,7 +26,7 @@
                     </td>
                     <td>@Html.DisplayFor(model => produtoModel.Nome)</td>
                     <td>@Html.DisplayFor(model => produtoModel.Descricao)</td>
-                    <td>@Html.DisplayFor(model => produtoModel.Preco)</td>
+                    <td>R$@Html.DisplayFor(model => produtoModel.Preco)</td>
                     
                     <td>
                         <a class="btn btn-sm btn-secondary active" asp-page="./Edit" asp-route-id="@produtoModel.ProdutoId"> <i class="fa fa-pencil"></i> </a>
@@ -42,8 +42,6 @@
         </style>
 <p style="text-align:center"><a class="btn btn-primary" role="button" asp-page="./Create"> <strong>Cadastrar</strong></a></p>
 </div>
-
-
 
 <style>
     main{

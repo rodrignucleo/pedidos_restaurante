@@ -1,33 +1,36 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Data;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Produto
 {
     public class Details : PageModel
     {
-        private readonly AppDbContext _context;
         public ProdutoModel ProdutoModel { get; set; } = new();
 
-        public Details(AppDbContext context){
-            _context = context;
+        public Details(){
         }
 
         public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Produto == null){
+            if(id == null){
                 return NotFound();
             }
 
-            var produtoModel = await _context.Produto
-            .Include(p => p.Categoria)
-            .FirstOrDefaultAsync(e => e.ProdutoId == id);
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Produto/Details/{id}";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
 
-            if(produtoModel == null){
+            if(!response.IsSuccessStatusCode){
                 return NotFound();
             }
-            ProdutoModel = produtoModel;
+
+            var content = await response.Content.ReadAsStringAsync();
+            ProdutoModel = JsonConvert.DeserializeObject<ProdutoModel>(content)!;
+            
             return Page();
         }
     }
