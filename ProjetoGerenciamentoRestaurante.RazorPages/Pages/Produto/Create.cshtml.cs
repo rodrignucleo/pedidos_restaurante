@@ -1,8 +1,6 @@
 using System.Text;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ProjetoGerenciamentoRestaurante.RazorPages.Data;
 using ProjetoGerenciamentoRestaurante.RazorPages.Models;

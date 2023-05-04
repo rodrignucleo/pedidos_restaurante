@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
 using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
@@ -57,34 +55,6 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             return Page();
         }
 
-      /*  public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null){
-                return NotFound();
-            }
-
-            var httpClient = new HttpClient();
-            var url = $"http://localhost:5171/Atendimento/Details/{id}";
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
-            var response = await httpClient.SendAsync(requestMessage);
-
-            if(!response.IsSuccessStatusCode){
-                return NotFound();
-            }
-
-            var content = await response.Content.ReadAsStringAsync();
-            AtendimentoModel = JsonConvert.DeserializeObject<AtendimentoModel>(content)!;
-
-            var httpClientPedido = new HttpClient();
-            var urlPedido = $"http://localhost:5171/Pedido_Produto/{id}";
-            var requestMessagePedido = new HttpRequestMessage(HttpMethod.Get, urlPedido);
-            var responsePedido = await httpClient.SendAsync(requestMessagePedido);
-            var contentPedido = await response.Content.ReadAsStringAsync();
-
-            Pedido_ProdutoList = JsonConvert.DeserializeObject<List<Pedido_ProdutoModel>>(contentPedido)!;
-
-            return Page();
-        }
-*/
         // public async Task<IActionResult> OnPostAsync(int? id){
         //     if(!ModelState.IsValid){
         //         return Page();
