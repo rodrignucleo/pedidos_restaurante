@@ -28,11 +28,14 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             return Ok(new
             {
                 AtendimentoId = atendimentoModel.AtendimentoId,
+                AtendimentoFechado = atendimentoModel.AtendimentoFechado,
+                DataSaida = atendimentoModel.DataSaida,
                 MesaId = atendimentoModel.MesaId,
                 Mesa = new
                 {
                     MesaId = atendimentoModel.Mesa!.MesaId,
-                    Numero = atendimentoModel.Mesa.Numero
+                    Numero = atendimentoModel.Mesa.Numero,
+                    HoraAbertura = atendimentoModel.Mesa.HoraAbertura
                 }
             });
         }
@@ -45,27 +48,24 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             context.SaveChanges();
             return Created($"/{atendimentoModel.AtendimentoId}", atendimentoModel);
         }
-
+*/
         [HttpPut("/Atendimento/Edit/{id:int}")]
         public IActionResult Put([FromRoute] int id, 
             [FromBody] AtendimentoModel atendimentoModel,
             [FromServices] AppDbContext context)
         {
-            var model = context.Atendimento!.Include(p => p.Categoria).FirstOrDefault(x => x.AtendimentoId == id);
+            var model = context.Atendimento!.Include(p => p.Mesa).FirstOrDefault(x => x.AtendimentoId == id);
             if (model == null) {
                 return NotFound();
             }
 
-            model.Nome = atendimentoModel.Nome;
-            model.Descricao = atendimentoModel.Descricao;
-            model.Preco = atendimentoModel.Preco;
-            model.CategoriaId = atendimentoModel.CategoriaId;
+            model.MesaId = atendimentoModel.MesaId;
 
             context.Atendimento!.Update(model);
             context.SaveChanges();
             return Ok(model);
         }
-
+/*
         [HttpDelete("/Atendimento/Delete/{id:int}")]
         public IActionResult Delete([FromRoute] int id, 
             [FromServices] AppDbContext context)

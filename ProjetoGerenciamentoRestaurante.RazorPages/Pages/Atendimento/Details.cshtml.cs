@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
     {
         [BindProperty]
         public AtendimentoModel AtendimentoModel { get; set; } = new();
+        public MesaModel MesaModel { get; set; } = new();
         public List<Pedido_ProdutoModel> Pedido_ProdutoList { get; set; } = new();
         
         public Details(){
@@ -30,12 +32,9 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             {
                 return NotFound();
             }
-
             var contentAtendimento = await responseAtendimento.Content.ReadAsStringAsync();
-            // AtendimentoModel = JsonConvert.DeserializeObject<dynamic>(contentAtendimento)!;
             AtendimentoModel = JsonConvert.DeserializeObject<AtendimentoModel>(contentAtendimento)!;
             
-
             // Obter informações dos pedidos
             var httpClientPedido = new HttpClient();
             var urlPedido = $"http://localhost:5171/Pedido_Produto/{id}";
@@ -55,55 +54,84 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             return Page();
         }
 
-        // public async Task<IActionResult> OnPostAsync(int? id){
-        //     if(!ModelState.IsValid){
-        //         return Page();
-        //     }
-        //     var atendimentoToUpdate = await _context.Atendimento!.FindAsync(id);
+        public async Task<IActionResult> OnPostAsync(int? id){
+            if(!ModelState.IsValid){
+                return Page();
+            }
 
-        //     if(atendimentoToUpdate == null){
-        //         return NotFound();
-        //     }
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Mesa/Edit/{id}";
+            var mesaJson = JsonConvert.SerializeObject(MesaModel);
+
+            var requestMessage = new HttpRequestMessage(HttpMethod.Put, url);
+            requestMessage.Content = new StringContent(mesaJson, Encoding.UTF8, "application/json");
+            var response = await httpClient.SendAsync(requestMessage);
+
+            if(!response.IsSuccessStatusCode){
+                return RedirectToPage("/Mesa/Index");
+            }
+            var httpClientAtendimento = new HttpClient();
+            var urlAtendimento = $"http://localhost:5171/Atendimento/Edit/{id}";
+            var atendimentoJson = JsonConvert.SerializeObject(AtendimentoModel);
+
+            var requestMessageAtendimento = new HttpRequestMessage(HttpMethod.Put, url);
+            requestMessageAtendimento.Content = new StringContent(atendimentoJson, Encoding.UTF8, "application/json");
+            var responseAtendimento = await httpClient.SendAsync(requestMessageAtendimento);
+
+            if(!response.IsSuccessStatusCode){
+                return RedirectToPage("/Atendimento/Index");
+            }
             
-        //     if(atendimentoToUpdate.AtendimentoFechado){
-        //         var mesaAtualId = atendimentoToUpdate.MesaId;
+            return Page();
 
-        //         atendimentoToUpdate.AtendimentoFechado = false;
-        //         atendimentoToUpdate.DataSaida = null;
+            /*if(!ModelState.IsValid){
+                return Page();
+            }
+            var atendimentoToUpdate = await _context.Atendimento!.FindAsync(id);
 
-        //         var mesaAtual = await _context.Mesa!.FindAsync(mesaAtualId);
-        //         mesaAtual!.Status = true;
-        //         mesaAtual.HoraAbertura = DateTime.Now.AddHours(1);
+            if(atendimentoToUpdate == null){
+                return NotFound();
+            }
             
-        //         try{
-        //             _context.Update(mesaAtual);
-        //             _context.Update(atendimentoToUpdate);
-        //             await _context.SaveChangesAsync();
-        //             return RedirectToPage("/Atendimento/Index");
-        //         } catch(DbUpdateException){
-        //             return Page();
-        //         }
-        //     }
-        //     else{
-        //         var mesaAtualId = atendimentoToUpdate.MesaId;
+            if(atendimentoToUpdate.AtendimentoFechado){
+                var mesaAtualId = atendimentoToUpdate.MesaId;
 
-        //         atendimentoToUpdate.AtendimentoFechado = true;
-        //         atendimentoToUpdate.DataSaida = DateTime.Now.AddHours(3);
+                atendimentoToUpdate.AtendimentoFechado = false;
+                atendimentoToUpdate.DataSaida = null;
 
-        //         var mesaAtual = await _context.Mesa!.FindAsync(mesaAtualId);
-        //         mesaAtual!.Status = false;
-        //         mesaAtual.HoraAbertura = null;
+                var mesaAtual = await _context.Mesa!.FindAsync(mesaAtualId);
+                mesaAtual!.Status = true;
+                mesaAtual.HoraAbertura = DateTime.Now.AddHours(1);
             
-        //         try{
-        //             _context.Update(mesaAtual);
-        //             _context.Update(atendimentoToUpdate);
-        //             await _context.SaveChangesAsync();
-        //             return RedirectToPage("/Atendimento/Index");
-        //         } catch(DbUpdateException){
-        //             return Page();
-        //         }
-        //     }
-        // }
+                try{
+                    _context.Update(mesaAtual);
+                    _context.Update(atendimentoToUpdate);
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("/Atendimento/Index");
+                } catch(DbUpdateException){
+                    return Page();
+                }
+            }
+            else{
+                var mesaAtualId = atendimentoToUpdate.MesaId;
+
+                atendimentoToUpdate.AtendimentoFechado = true;
+                atendimentoToUpdate.DataSaida = DateTime.Now.AddHours(3);
+
+                var mesaAtual = await _context.Mesa!.FindAsync(mesaAtualId);
+                mesaAtual!.Status = false;
+                mesaAtual.HoraAbertura = null;
+            
+                try{
+                    _context.Update(mesaAtual);
+                    _context.Update(atendimentoToUpdate);
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("/Atendimento/Index");
+                } catch(DbUpdateException){
+                    return Page();
+                }
+            }*/
+        }
 
     }
 }
