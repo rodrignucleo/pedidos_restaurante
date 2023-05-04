@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProjetoGerenciamentoRestaurante.RazorPages.Data;
 using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
@@ -8,17 +9,18 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
 {
     public class Index : PageModel
     {
-        private readonly AppDbContext _context;
-
         public List<AtendimentoModel> AtendimentoList { get; set; } = new();
-        public Index(AppDbContext context){
-            _context = context;
+        public Index(){
         }
 
         public async Task<IActionResult> OnGetAsync(){
-            AtendimentoList = await _context.Atendimento!
-            .Include(p => p.Mesa)
-            .ToListAsync();
+            var httpClient = new HttpClient();
+            var url = "http://localhost:5171/Atendimento";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+            var content = await response.Content.ReadAsStringAsync();
+
+            AtendimentoList = JsonConvert.DeserializeObject<List<AtendimentoModel>>(content)!;
             
             return Page();
         }

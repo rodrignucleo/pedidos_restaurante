@@ -18,7 +18,7 @@ Pré-requisitos
 
 - Clone o repositório ou faça o download do ZIP;
 - Abra a solução ProjetoGerenciamentoRestaurante.sln no Visual Studio;
-- Execute a aplicação utilizando o comando "dotnet watch run"
+- Execute a aplicação rodando o .bat no diretório pedidos_restaurante com o comando: "./run.bat"
 
 # Utilização
 
