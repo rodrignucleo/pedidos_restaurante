@@ -47,7 +47,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Mesa
 
             var response = await httpClient.SendAsync(requestMessage);
 
-            if(MesaModel.HoraAbertura == null){
+            if(MesaModel.HoraAbertura == null && MesaModel.Status == true){
                 TempData["Mensagem"] = "Insira a Hora de Abertura da Mesa!!";
                 return Page();
             }

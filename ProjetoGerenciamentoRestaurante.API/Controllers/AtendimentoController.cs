@@ -55,29 +55,47 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
             [FromServices] AppDbContext context)
         {
             var model = context.Atendimento!.Include(p => p.Mesa).FirstOrDefault(x => x.AtendimentoId == id);
+
             if (model == null) {
                 return NotFound();
             }
 
-            model.MesaId = atendimentoModel.MesaId;
-
+            if(model.AtendimentoFechado){
+                model.DataSaida = null;
+                model.AtendimentoFechado = false;
+                model.Mesa!.Status = true;
+                model.Mesa.HoraAbertura = DateTime.Now.AddHours(1);
+            }
+            else{
+                model.DataSaida = DateTime.Now;
+                model.AtendimentoFechado = true;
+                model.Mesa!.Status = false;
+                model.Mesa.HoraAbertura = null;
+            }
+            
             context.Atendimento!.Update(model);
             context.SaveChanges();
             return Ok(model);
         }
-/*
+
         [HttpDelete("/Atendimento/Delete/{id:int}")]
         public IActionResult Delete([FromRoute] int id, 
             [FromServices] AppDbContext context)
         {
-            var model = context.Atendimento!.FirstOrDefault(x => x.AtendimentoId == id);
-            if (model == null) {
+            var atendimentoToDelete = context.Atendimento!.Include(p => p.Mesa).FirstOrDefault(x => x.AtendimentoId == id);
+
+            if (atendimentoToDelete == null) {
                 return NotFound();
             }
 
-            context.Atendimento!.Remove(model);
+            // Altera o status da mesa e sua hora de abertura
+            atendimentoToDelete.Mesa!.Status = false;
+            atendimentoToDelete.Mesa.HoraAbertura = null;
+            
+            context.Atendimento!.Remove(atendimentoToDelete);
             context.SaveChanges();
-            return Ok(model);
-        }*/
+            
+            return Ok(atendimentoToDelete);
+        }
     }
 }
