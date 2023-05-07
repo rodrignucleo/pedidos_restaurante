@@ -1714,24 +1714,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jacks\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\rodri\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jacks\\Documents\\GitHub\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
+      "projectUniqueName": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
       "projectName": "ProjetoGerenciamentoRestaurante.API",
-      "projectPath": "C:\\Users\\jacks\\Documents\\GitHub\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
-      "packagesPath": "C:\\Users\\jacks\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jacks\\Documents\\GitHub\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\obj\\",
+      "projectPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
+      "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rodri\\OneDrive\\Documentos\\Programacao\\TDS\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\jacks\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1739,7 +1734,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

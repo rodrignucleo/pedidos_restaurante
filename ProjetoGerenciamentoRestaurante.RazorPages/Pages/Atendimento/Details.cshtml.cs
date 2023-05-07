@@ -60,7 +60,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             }
 
             var httpClient = new HttpClient();
-            var url = $"http://localhost:5171/Atendimento/Edit/{id}";
+            var url = $"http://localhost:5171/Pedido_Produto/Edit/{id}";
             var atendimentoJson = JsonConvert.SerializeObject(AtendimentoModel);
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Put, url);
@@ -68,11 +68,15 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
 
             var response = await httpClient.SendAsync(requestMessage);
 
-            if(!response.IsSuccessStatusCode){
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToPage("/Atendimento/Details", id);
+            } 
+            else 
+            {
+                TempData["Aviso_Abrir_Atendimento"] = "A mesa que você esta tentando abrir o atendimento já está ocupada!!";
                 return Page();
             }
-
-            return RedirectToPage("/Atendimento/Index");
         }
 
     }

@@ -44,45 +44,25 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             return Page();
         }
 
-/*
         public async Task<IActionResult> OnPostAsync(int id){
+
             if(!ModelState.IsValid){
                 return Page();
             }
-            var atendimentoToUpdate = await _context.Atendimento!.FindAsync(id);
 
-            if(atendimentoToUpdate == null){
-                return NotFound();
-            }
-            
-            var mesaAntigaId = atendimentoToUpdate.MesaId;
+            var httpClient = new HttpClient();
+            var url = $"http://localhost:5171/Atendimento/Edit/{id}";
+            var mesaJson = JsonConvert.SerializeObject(AtendimentoModel);
 
-            atendimentoToUpdate.MesaId = AtendimentoModel.MesaId;
+            var requestMessage = new HttpRequestMessage(HttpMethod.Put, url);
+            requestMessage.Content = new StringContent(mesaJson, Encoding.UTF8, "application/json");
 
-            var mesaAntiga = await _context.Mesa!.FindAsync(mesaAntigaId);
-            mesaAntiga!.Status = false;
-            mesaAntiga.HoraAbertura = null;
+            var response = await httpClient.SendAsync(requestMessage);
 
-            var mesaNova = await _context.Mesa!.FindAsync(AtendimentoModel.MesaId);
-            mesaNova!.Status = true;
-            mesaNova.HoraAbertura = DateTime.Now.AddHours(2);
-
-        
-            try{
-                bool mesaOcupada = await _context.Mesa!.AnyAsync(m => m.MesaId == AtendimentoModel.MesaId && m.Status);
-                if (mesaOcupada) {
-                    // ModelState.AddModelError(string.Empty, "A mesa já está ocupada!");
-                    TempData["Mensagem"] = "A mesa já está ocupada!!";
-                    return RedirectToPage("/Atendimento/Create");
-                }
-                _context.Update(mesaAntiga);
-                _context.Update(mesaNova);
-                _context.Update(atendimentoToUpdate);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/Atendimento/Index");
-            } catch(DbUpdateException){
-                return Page();
-            }
-        }*/
+            if(!response.IsSuccessStatusCode){
+                return Redirect($"/Atendimento/Edit/{id}");
+            } 
+            return RedirectToPage("/Atendimento/Index");
+        }
     }
 }

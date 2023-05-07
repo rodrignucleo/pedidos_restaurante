@@ -5,7 +5,11 @@
 <h1>Atendimento: @Model.AtendimentoModel.AtendimentoId </h1>
 
 <div class="info">
-    <h3><strong>Mesa: </strong> @Model.AtendimentoModel.Mesa!.Numero</p></h3>
+        @if(TempData["Aviso_Abrir_Atendimento"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Aviso_Abrir_Atendimento"]</div>
+        }
+<h3><strong>Mesa: </strong> @Model.AtendimentoModel.Mesa!.Numero</p></h3>
     
     @if (Model.Pedido_ProdutoList.Any())
     {

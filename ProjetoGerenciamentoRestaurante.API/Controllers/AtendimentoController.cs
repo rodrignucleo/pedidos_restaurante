@@ -54,6 +54,7 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
                 // Altera o status da mesa e sua hora de abertura
                 atendimentoToAdd.Status = true;
                 atendimentoToAdd.HoraAbertura = DateTime.Now.AddHours(1.50);
+                atendimentoModel.DataCriacao = DateTime.Now;
                 context.SaveChanges();
                 return Created($"/{atendimentoModel.AtendimentoId}", atendimentoModel);
             }
@@ -67,27 +68,22 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
         public IActionResult Put([FromRoute] int id, 
             [FromBody] AtendimentoModel atendimentoModel,
             [FromServices] AppDbContext context)
-        {
+        {   
             var model = context.Atendimento!.Include(p => p.Mesa).FirstOrDefault(x => x.AtendimentoId == id);
-
             if (model == null) {
                 return NotFound();
             }
-
-            if(model.AtendimentoFechado){
-                model.DataSaida = null;
-                model.AtendimentoFechado = false;
-                model.Mesa!.Status = true;
-                model.Mesa.HoraAbertura = DateTime.Now.AddHours(1);
-            }
-            else{
-                model.DataSaida = DateTime.Now;
-                model.AtendimentoFechado = true;
-                model.Mesa!.Status = false;
-                model.Mesa.HoraAbertura = null;
-            }
+            var mesaAntigaId = model.MesaId;
+            var mesaAntiga = context.Mesa!.FirstOrDefault(x => x.MesaId == atendimentoModel.MesaId);
+            mesaAntiga!.Status = true;
+            mesaAntiga!.HoraAbertura = DateTime.Now.AddHours(1);
             
+            model.MesaId = atendimentoModel.MesaId;
+            model.Mesa!.Status = false;
+            model.Mesa!.HoraAbertura = null;
+
             context.Atendimento!.Update(model);
+
             context.SaveChanges();
             return Ok(model);
         }

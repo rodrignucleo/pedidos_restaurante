@@ -26,55 +26,27 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             return Page();
         }
 
-public async Task<IActionResult> OnPostAsync(int id)
-{
-    if(!ModelState.IsValid)
-    {
-        return Page();
-    }
-
-    var httpClient = new HttpClient();
-    var atendimentoJson = JsonConvert.SerializeObject(AtendimentoModel);
-    var content = new StringContent(atendimentoJson, Encoding.UTF8, "application/json");
-    var atendimentoResponse = await httpClient.PostAsync("http://localhost:5171/Atendimento/Create", content);
-
-    if (atendimentoResponse.IsSuccessStatusCode)
-    {
-        return RedirectToPage("/Atendimento/Index");
-    } 
-    else 
-    {
-        TempData["Aviso_Alocar_Mesa"] = "A mesa já está ocupada!!";
-        return RedirectToPage("/Atendimento/Create");
-    }
-}
-
-
-
-    /*
-            if(!ModelState.IsValid){
-                return Page();
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if(!ModelState.IsValid)
+            {
+                return RedirectToPage("/Atendimento/Create");
             }
 
-            try{
-                bool mesaOcupada = await _context.Mesa!.AnyAsync(m => m.MesaId == AtendimentoModel.MesaId && m.Status);
-                if (mesaOcupada) {
-                    // ModelState.AddModelError(string.Empty, "A mesa já está ocupada!");
-                    TempData["Mensagem"] = "A mesa já está ocupada!!";
-                    return RedirectToPage("/Atendimento/Create");
-                }
-                AtendimentoModel.DataCriacao = DateTime.Now;
+            var httpClient = new HttpClient();
+            var atendimentoJson = JsonConvert.SerializeObject(AtendimentoModel);
+            var content = new StringContent(atendimentoJson, Encoding.UTF8, "application/json");
+            var atendimentoResponse = await httpClient.PostAsync("http://localhost:5171/Atendimento/Create", content);
 
-                var mesaToUpdate = await _context.Mesa!.FindAsync(AtendimentoModel.MesaId);
-                mesaToUpdate!.Status = true;
-                mesaToUpdate.HoraAbertura = DateTime.Now.AddHours(2);
-                 
-                _context.Add(AtendimentoModel);
-                await _context.SaveChangesAsync();
+            if (atendimentoResponse.IsSuccessStatusCode)
+            {
                 return RedirectToPage("/Atendimento/Index");
-            } catch(DbUpdateException){
-                return Page();
+            } 
+            else 
+            {
+                TempData["Aviso_Alocar_Mesa"] = "A mesa já está ocupada!!";
+                return RedirectToPage("/Atendimento/Create");
             }
-            */
+        }
         }
 }
