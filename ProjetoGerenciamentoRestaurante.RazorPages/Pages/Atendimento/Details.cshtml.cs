@@ -48,7 +48,6 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             var contentPedido = await responsePedido.Content.ReadAsStringAsync();
             var pedido_ProdutoList = JsonConvert.DeserializeObject<List<Pedido_ProdutoModel>>(contentPedido);
 
-
             Pedido_ProdutoList = pedido_ProdutoList!;
 
             return Page();

@@ -1,14 +1,13 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Pedido
 {
     public class Create : PageModel
     {
-        private readonly AppDbContext _context;
         public AtendimentoModel AtendimentoModel { get; set; } = new();
         [BindProperty]
         public PedidoModel PedidoModel { get; set; } = new();
@@ -17,29 +16,46 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Pedido
         public Pedido_ProdutoModel Pedido_ProdutoModel { get; set; } = new();
         public List<GarconModel> GarconList { get; set; } = new();
         public List<ProdutoModel> ProdutoList { get; set; } = new();
-        public List<Pedido_ProdutoModel> Pedido_ProdutoList { get; set; } = new();
+        // public List<Pedido_ProdutoModel> Pedido_ProdutoList { get; set; } = new();
         
-        public Create(AppDbContext context){
-            _context = context;
+        public Create(){
         }
 
         public async Task<IActionResult> OnGetAsync(int? id){
-            if(id == null || _context.Atendimento == null){
+            if (id == null)
+            {
                 return NotFound();
             }
 
-            var atendimentoModel = await _context.Atendimento
-            .FirstOrDefaultAsync(e => e.AtendimentoId == id);
+            // Obter informações do atendimento
+            var httpClientAtendimento = new HttpClient();
+            var urlAtendimento = $"http://localhost:5171/Atendimento/Details/{id}";
+            var responseAtendimento = await httpClientAtendimento.GetAsync(urlAtendimento);
 
-            if(atendimentoModel == null){
+            if (!responseAtendimento.IsSuccessStatusCode)
+            {
                 return NotFound();
             }
+            var contentAtendimento = await responseAtendimento.Content.ReadAsStringAsync();
+            AtendimentoModel = JsonConvert.DeserializeObject<AtendimentoModel>(contentAtendimento)!;
+            
+            // Pedido_ProdutoList = await _context.Pedido_Produto!.ToListAsync();
+            
+            var httpClientGarcon = new HttpClient();
+            var urlGarcon = "http://localhost:5171/Garcon";
+            var requestMessageGarcon = new HttpRequestMessage(HttpMethod.Get, urlGarcon);
+            var responseGarcon = await httpClientGarcon.SendAsync(requestMessageGarcon);
+            var contentGarcon = await responseGarcon.Content.ReadAsStringAsync();
 
-            AtendimentoModel = atendimentoModel;
+            GarconList = JsonConvert.DeserializeObject<List<GarconModel>>(contentGarcon)!;
 
-            Pedido_ProdutoList = await _context.Pedido_Produto!.ToListAsync();
-            GarconList = await _context.Garcon!.ToListAsync();
-            ProdutoList = await _context.Produto!.ToListAsync();
+            var httpClientProduto = new HttpClient();
+            var urlProduto = "http://localhost:5171/Produto";
+            var requestMessageProduto = new HttpRequestMessage(HttpMethod.Get, urlProduto);
+            var responseProduto = await httpClientProduto.SendAsync(requestMessageProduto);
+            var contentProduto = await responseProduto.Content.ReadAsStringAsync();
+
+            ProdutoList = JsonConvert.DeserializeObject<List<ProdutoModel>>(contentProduto)!;
             
             return Page();
         }
@@ -48,7 +64,34 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Pedido
             if(!ModelState.IsValid){
                 return RedirectToAction("/Pedido/Create/"+id);
             }
+            
+            var httpClientPedido = new HttpClient();
+            var urlPedido = "http://localhost:5171/Pedido/Create";
+            var produtoJsonPedido = JsonConvert.SerializeObject(PedidoModel);
+            var contentPedido = new StringContent(produtoJsonPedido, Encoding.UTF8, "application/json");
+            var responsePedido = await httpClientPedido.PostAsync(urlPedido, contentPedido);
 
+            if(responsePedido.IsSuccessStatusCode){
+                string responseContent = await responsePedido.Content.ReadAsStringAsync();
+                PedidoModel pedido = JsonConvert.DeserializeObject<PedidoModel>(responseContent)!;
+                int pedidoId = pedido.PedidoId;
+
+                var httpClientPedido_Produto = new HttpClient();
+                var urlPedido_Produto = $"http://localhost:5171/Pedido_Produto/Create/{pedidoId}";
+                var produtoJsonPedido_Produto = JsonConvert.SerializeObject(Pedido_ProdutoModel);
+
+                var contentPedido_Produto = new StringContent(produtoJsonPedido_Produto, Encoding.UTF8, "application/json");
+                var responsePedido_Produto = await httpClientPedido_Produto.PostAsync(urlPedido_Produto, contentPedido_Produto);
+                if(responsePedido_Produto.IsSuccessStatusCode){
+                    return Redirect("/Atendimento/Details/"+id);
+                }
+                else{
+                    return Redirect("/");
+                }
+            } else {
+                return Redirect("/Atendimento");
+            }
+/*
             try{
                 _context.Pedido!.Add(PedidoModel);
 
@@ -62,7 +105,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Pedido
                 
             } catch(DbUpdateException){
                 return RedirectToAction("/Pedido/Create/"+id);
-            }
+            }*/
         }
     }
 }

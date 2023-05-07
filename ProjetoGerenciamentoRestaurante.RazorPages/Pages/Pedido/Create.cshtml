@@ -10,7 +10,7 @@
             <input type="hidden" asp-for="PedidoModel.PedidoId"/>
 
             <label asp-for="PedidoModel.AtendimentoId">Número do Atendimento</label>
-            <input asp-for="PedidoModel.AtendimentoId" value="@Model.AtendimentoModel.AtendimentoId" class="form-control"/>
+            <input asp-for="PedidoModel.AtendimentoId" value="@Model.AtendimentoModel.AtendimentoId" class="form-control" readonly="readonly"/>
             <span asp-validation-for="PedidoModel.AtendimentoId" class="text-danger"></span>
 
             <label >Nome do Garçom</label></br>
@@ -23,7 +23,8 @@
             </select>
 
             <label asp-for="PedidoModel.HorarioPedido">Hora do Pedido</label>
-            <input asp-for="PedidoModel.HorarioPedido" class="form-control" value=null />
+            <input asp-for="PedidoModel.HorarioPedido" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" asp-format="{0:yyyy-MM-ddTHH:mm:ss}" />
+            @* <input asp-for="PedidoModel.HorarioPedido" class="form-control" value=null /> *@
             <span asp-validation-for="PedidoModel.HorarioPedido" class="text-danger"></span>
 
             <div class="row">
