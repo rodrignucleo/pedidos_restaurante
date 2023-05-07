@@ -1,3 +1,13 @@
+/*	Otimizar Pesquisa	*/
+CREATE INDEX PedidoId on Pedido(PedidoId);
+CREATE INDEX PedidoProdutoId on Pedido_Produto(PedidoProdutoId);
+CREATE INDEX ProdutoId on Produto(ProdutoId);
+CREATE INDEX CategoriaId on Categoria(CategoriaId);
+CREATE INDEX GarconId on Garcon(GarconId);
+CREATE INDEX AtendimentoId on Atendimento(AtendimentoId);
+CREATE INDEX MesaId on Mesa(MesaId);
+
+
 /*
 	Inserir Dados Garçom 
 */
