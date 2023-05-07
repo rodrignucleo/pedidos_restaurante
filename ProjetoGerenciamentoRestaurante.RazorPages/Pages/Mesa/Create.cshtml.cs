@@ -12,7 +12,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Mesa
         public MesaModel MesaModel { get; set; } = new();
         public Create(){
         }
-        public async Task<IActionResult> OnPostAsync(int id){
+        public async Task<IActionResult> OnPostAsync(){
             if(!ModelState.IsValid){
                 return Page();
             }

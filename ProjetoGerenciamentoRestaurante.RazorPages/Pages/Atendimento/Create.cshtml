@@ -1,17 +1,18 @@
 @page
 @model ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento.Create
+<div align="center">
 <h1>Cadastrar Atendimento</h1>
 
 <hr/>
-<div class="row">
+<div>
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-dange"></div>
             <input type="hidden" asp-for="AtendimentoModel.AtendimentoId"/>
             <div class="form-group">
-                @if(TempData["Mensagem"] != null)
+                @if(TempData["Aviso_Alocar_Mesa"] != null)
                 {
-                <div class="alert alert-success">@TempData["Mensagem"]</div>
+                <div class="alert alert-success">@TempData["Aviso_Alocar_Mesa"]</div>
                 }
             <label asp-for="AtendimentoModel.MesaId">Numero da Mesa</label></br>
             <select asp-for="AtendimentoModel.MesaId" class="form-control">
@@ -29,4 +30,6 @@
             </div>
         </form>
     </div>
+</div>
+
 </div>

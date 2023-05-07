@@ -48,7 +48,7 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             Pedido_ProdutoList = pedido_ProdutoList!;
 
             if(Pedido_ProdutoList is not null){
-                TempData["Mensagem"] = "Esse atendimento não pode ser excluido, ele tem pedidos cadastrados!!!";
+                TempData["Aviso_Excluir"] = "Esse atendimento não pode ser excluido, ele tem pedidos cadastrados!!!";
                 return Page();
             }
 

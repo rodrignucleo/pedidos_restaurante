@@ -39,16 +39,30 @@ namespace ProjetoGerenciamentoRestaurante.API.Controllers
                 }
             });
         }
-/*
+
         [HttpPost("/Atendimento/Create")]
         public IActionResult Post([FromBody] AtendimentoModel atendimentoModel,
             [FromServices] AppDbContext context)
         {
-            context.Atendimento!.Add(atendimentoModel);
-            context.SaveChanges();
-            return Created($"/{atendimentoModel.AtendimentoId}", atendimentoModel);
+            var atendimentoToAdd = context.Mesa!.FirstOrDefault(x => x.MesaId == atendimentoModel.MesaId);
+
+            if (atendimentoToAdd == null) {
+                return NotFound();
+            }
+            if(atendimentoToAdd!.Status == false){
+                context.Atendimento!.Add(atendimentoModel);
+                // Altera o status da mesa e sua hora de abertura
+                atendimentoToAdd.Status = true;
+                atendimentoToAdd.HoraAbertura = DateTime.Now.AddHours(1.50);
+                context.SaveChanges();
+                return Created($"/{atendimentoModel.AtendimentoId}", atendimentoModel);
+            }
+            else{
+                return RedirectToPage("/Atendimento/Create");
+            }
+            
         }
-*/
+
         [HttpPut("/Atendimento/Edit/{id:int}")]
         public IActionResult Put([FromRoute] int id, 
             [FromBody] AtendimentoModel atendimentoModel,

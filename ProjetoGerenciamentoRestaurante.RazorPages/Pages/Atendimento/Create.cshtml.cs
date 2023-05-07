@@ -1,27 +1,57 @@
-using ProjetoGerenciamentoRestaurante.RazorPages.Data;
-using ProjetoGerenciamentoRestaurante.RazorPages.Models;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProjetoGerenciamentoRestaurante.RazorPages.Models;
 
 namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
 {
     public class Create : PageModel
     {
-         private readonly AppDbContext _context;
         [BindProperty]
         public AtendimentoModel AtendimentoModel { get; set; } = new();
         public List<MesaModel> MesaList { get; set; } = new();
-        public Create(AppDbContext context){
-            _context = context;
+        public Create(){
         }
 
         public async Task<IActionResult> OnGetAsync(){
-            MesaList = await _context.Mesa!.ToListAsync();
+            var httpClient = new HttpClient();
+            var url = "http://localhost:5171/Mesa";
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var response = await httpClient.SendAsync(requestMessage);
+            var content = await response.Content.ReadAsStringAsync();
+
+            MesaList = JsonConvert.DeserializeObject<List<MesaModel>>(content)!;
+            
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id){
+public async Task<IActionResult> OnPostAsync(int id)
+{
+    if(!ModelState.IsValid)
+    {
+        return Page();
+    }
+
+    var httpClient = new HttpClient();
+    var atendimentoJson = JsonConvert.SerializeObject(AtendimentoModel);
+    var content = new StringContent(atendimentoJson, Encoding.UTF8, "application/json");
+    var atendimentoResponse = await httpClient.PostAsync("http://localhost:5171/Atendimento/Create", content);
+
+    if (atendimentoResponse.IsSuccessStatusCode)
+    {
+        return RedirectToPage("/Atendimento/Index");
+    } 
+    else 
+    {
+        TempData["Aviso_Alocar_Mesa"] = "A mesa já está ocupada!!";
+        return RedirectToPage("/Atendimento/Create");
+    }
+}
+
+
+
+    /*
             if(!ModelState.IsValid){
                 return Page();
             }
@@ -45,7 +75,6 @@ namespace ProjetoGerenciamentoRestaurante.RazorPages.Pages.Atendimento
             } catch(DbUpdateException){
                 return Page();
             }
-            
+            */
         }
-    }
 }
