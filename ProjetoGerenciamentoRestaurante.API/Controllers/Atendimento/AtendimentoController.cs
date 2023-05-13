@@ -3,7 +3,7 @@ using ProjetoGerenciamentoRestaurante.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ProjetoGerenciamentoRestaurante.API.Controllers
+namespace ProjetoGerenciamentoRestaurante.API.Controllers.Atendimento
 {
     [ApiController]
     [Route("api/[controller]")]

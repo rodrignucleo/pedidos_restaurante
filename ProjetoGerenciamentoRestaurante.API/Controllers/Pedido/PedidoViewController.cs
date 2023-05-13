@@ -1,10 +1,10 @@
-using ProjetoGerenciamentoRestaurante.API.Models;
 using ProjetoGerenciamentoRestaurante.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProjetoGerenciamentoRestaurante.API.Models;
 
-namespace ProjetoGerenciamentoRestaurante.API.Controllers
-{   
+namespace ProjetoGerenciamentoRestaurante.API.Controllers.Pedido
+{
     [ApiController]
     [Route("api/[controller]")]
     

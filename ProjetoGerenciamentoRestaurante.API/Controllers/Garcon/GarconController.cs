@@ -1,12 +1,12 @@
-using ProjetoGerenciamentoRestaurante.API.Models;
 using ProjetoGerenciamentoRestaurante.API.Data;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoGerenciamentoRestaurante.API.Models;
 
-namespace ProjetoGerenciamentoRestaurante.API.Controllers
+namespace ProjetoGerenciamentoRestaurante.API.Controllers.Garcon
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GarcomController : ControllerBase
+    public class GarconController : ControllerBase
     {
         [HttpGet]
         [Route("/Garcon")]

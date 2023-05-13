@@ -2,7 +2,7 @@ using ProjetoGerenciamentoRestaurante.API.Models;
 using ProjetoGerenciamentoRestaurante.API.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ProjetoGerenciamentoRestaurante.API.Controllers
+namespace ProjetoGerenciamentoRestaurante.API.Controllers.Categoria
 {
     [ApiController]
     [Route("api/[controller]")]

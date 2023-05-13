@@ -2,15 +2,18 @@
 @model ProjetoGerenciamentoRestaurante.RazorPages.Pages.Garcon.Details
 
 <h1>Detalhes do Garçom: @Model.GarconModel.Nome</h1>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="info">
     <p><strong>Nome: </strong> @Model.GarconModel.Nome </p>
     <p><strong>Sobrenome: </strong> @Model.GarconModel.Sobrenome </p>
     <p><strong>CPF: </strong> @Model.GarconModel.Cpf </p>
     <p><strong>Telefone: </strong> @Model.GarconModel.Telefone </p>
+    <a class="btn btn-sm btn-secondary active" asp-page="./Edit" asp-route-id="@Model.GarconModel.GarconId"> <i class="fa fa-pencil"></i>  </a>
+    <a class="btn btn-secondary btn-sm btn-danger" asp-page="./Delete" asp-route-id="@Model.GarconModel.GarconId"> <i class="fa fa-trash"></i> </a>
 </div>
 
 <p style="text-align:center"><a class="btn btn-primary" role="button" asp-page="Index"> <strong>Voltar</strong></a></p>
+
 
 <style>
 
