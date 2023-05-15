@@ -35,7 +35,7 @@
             
             <select asp-for="ProdutoModel.CategoriaId">
                 <option value="">Selecione uma categoria</option>
-                @foreach (var categoriaModel in Model.CategoriaList)
+                @foreach (var categoriaModel in Model.CategoriaList.OrderBy(g => g.Nome))
                 {
                     <option value="@categoriaModel.CategoriaId">@categoriaModel.Nome</option>
                 }

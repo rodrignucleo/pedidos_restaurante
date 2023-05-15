@@ -17,7 +17,7 @@
             <label asp-for="AtendimentoModel.MesaId">Numero da Mesa</label></br>
             <select asp-for="AtendimentoModel.MesaId" class="form-control">
                 <option value="">Selecione o número da Mesa</option>
-                @foreach (var mesaModel in Model.MesaList)
+                @foreach (var mesaModel in Model.MesaList.OrderBy(g => g.Numero))
                 {
                     <option value="@mesaModel.MesaId">@mesaModel.Numero</option>
                 }

@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var mesaModel in Model.MesaList)
+            @foreach (var mesaModel in Model.MesaList.OrderBy(g => g.Numero))
             {
                 <tr>
                     <td>@Html.DisplayFor(model => mesaModel.MesaId)</td>

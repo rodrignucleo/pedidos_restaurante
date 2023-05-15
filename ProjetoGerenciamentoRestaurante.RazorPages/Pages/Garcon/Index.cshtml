@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var garconModel in Model.GarconList)
+            @foreach (var garconModel in Model.GarconList.OrderBy(g => g.Nome))
             {
                 <tr>
                     <td>@Html.DisplayFor(model => garconModel.GarconId)</td>

@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var atendimentoModel in Model.AtendimentoList)
+            @foreach (var atendimentoModel in Model.AtendimentoList.OrderBy(g => g.Mesa!.Numero))
             {
                 <tr>
                     <td>@Html.DisplayFor(model => atendimentoModel.AtendimentoId)</td>

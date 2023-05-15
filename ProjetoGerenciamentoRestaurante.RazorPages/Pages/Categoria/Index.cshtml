@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var categoriaModel in Model.CategoriaList)
+            @foreach (var categoriaModel in Model.CategoriaList.OrderBy(g => g.Nome))
             {
                 <tr>
                     <td>@Html.DisplayFor(model => categoriaModel.CategoriaId)</td>
