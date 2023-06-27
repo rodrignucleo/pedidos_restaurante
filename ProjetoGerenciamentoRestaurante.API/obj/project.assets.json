@@ -1714,26 +1714,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rodri\\.nuget\\packages\\": {}
+    "C:\\Users\\Rodrigo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rodri\\Documents\\Programacao\\APIs\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
+      "projectUniqueName": "C:\\Users\\Rodrigo\\Documents\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
       "projectName": "ProjetoGerenciamentoRestaurante.API",
-      "projectPath": "C:\\Users\\rodri\\Documents\\Programacao\\APIs\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
-      "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rodri\\Documents\\Programacao\\APIs\\Gamificacao\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\obj\\",
+      "projectPath": "C:\\Users\\Rodrigo\\Documents\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\ProjetoGerenciamentoRestaurante.API.csproj",
+      "packagesPath": "C:\\Users\\Rodrigo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Rodrigo\\Documents\\pedidos_restaurante\\ProjetoGerenciamentoRestaurante.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Rodrigo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.305\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1790,7 +1789,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.305\\RuntimeIdentifierGraph.json"
       }
     }
   }
